@@ -23,7 +23,6 @@ Below is a list of all configuration parameters available, items in **bold** are
 `bind.port`                  | Bind port for the container            | `3306`                               |
 `service.name`               | Service name                           | `cloudsql-proxy`                     |
 `service.type`               | Service type                           | `ClusterIP`                          |
-`service.internalPort`       | Service internal port                  | `3306`                               |
 `service.externalPort`       | Service external port                  |  `3306`                              |
 `credentials.path`           | Where to mount credentials             | `/secrets/cloudsql`                  |
 `credentials.file`           | Where to look for a credentials file   | `credentials.json`                   |

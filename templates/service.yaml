@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "cloudsql-proxy.fullname" . }}
   labels:
-    app: {{ template "name" . }}
+    app: {{ template "cloudsql-proxy.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,9 +11,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.externalPort }}
-      targetPort: {{ .Values.service.internalPort }}
+      targetPort: {{ .Values.bind.port }}
       protocol: TCP
       name: {{ .Values.service.name }}
   selector:
-    app: {{ template "name" . }}
+    app: {{ template "cloudsql-proxy.name" . }}
     release: {{ .Release.Name }}

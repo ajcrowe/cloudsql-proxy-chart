@@ -5,6 +5,7 @@ replicaCount: 1
 image:
   name: b.gcr.io/cloudsql-docker/gce-proxy
   tag: latest
+  pullPolicy: Always
 gcp:
   project: projectname
   region: europe-west2
@@ -15,7 +16,6 @@ bind:
 service:
   name: cloudsql-proxy
   type: ClusterIP
-  internalPort: 3306
   externalPort: 3306
 credentials: 
   path: /secrets/cloudsql

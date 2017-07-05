@@ -7,7 +7,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
+        app: {{ template "cloudsql-proxy.name" . }}
         chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
         release: {{ .Release.Name }}
         heritage: {{ .Release.Service }}
@@ -15,8 +15,9 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       containers:
-        - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          name: cloudsql-proxy
+        - name: cloudsql-proxy
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           command: ["/cloud_sql_proxy",
                     "-instances={{ .Values.gcp.project }}:{{ .Values.gcp.region }}:{{ .Values.gcp.instance }}=tcp:{{ .Values.bind.addr}}:{{ .Values.bind.port}}",
                     "-credential_file={{ .Values.credentials.path }}/{{ .Values.credentials.file }}"]
@@ -26,6 +27,10 @@ spec:
               readOnly: true
             - name: ssl-certs
               mountPath: {{ .Values.ssl.path }}
+          ports:
+          - containerPort: {{ .Values.bind.port }}
+            name: cloudsqlproxyport
+            protocol: TCP
       volumes:
         - name: cloudsql-credentials
           secret:

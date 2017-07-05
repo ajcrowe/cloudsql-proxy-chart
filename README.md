@@ -9,16 +9,18 @@ This [Helm](https://helm.sh) chart provides a containerised cloud sql service wi
 
 ### Configuration
 
+Below is a list of all configuration parameters available, items in **bold** are required settings
+
 | Parameter                  | Description                            | Default                              |
 |----------------------------|----------------------------------------|--------------------------------------|
-`replicaCount`               | Number of pods to run in deployment    | `1`                                  |
+**`gcp.project`**            | Google Cloud Platform project          |  `projectname`                       |
+**`gcp.region`**             | Google Cloud Platford region           |  `europe-west2`                      |
+**`gcp.instance`**           | Name of your Cloud SQL instance        | `cloudsql-instance`                  |
 `image.name`                 | The image repository to pull           | `b.gcr.io/cloudsql-docker/gce-proxy` |
 `image.tag`                  | The image tag to pull                  | `latest`                             |
-`gcp.project`                | Google Cloud Platform project          |  `projectname`                       | 
-`gcp.region`                 | Google Cloud Platford region           |  `europe-west2`                      | 
-`gcp.instance`               | Name of your Cloud SQL instance        | `cloudsql-instance`                  | 
+`replicaCount`               | Number of pods to run in deployment    | `1`                                  |
 `bind.addr`                  | Bind address for the container         | `0.0.0.0`                            |
-`bind.port`                  | Bind port for the container            | `3306`                               | 
+`bind.port`                  | Bind port for the container            | `3306`                               |
 `service.name`               | Service name                           | `cloudsql-proxy`                     |
 `service.type`               | Service type                           | `ClusterIP`                          |
 `service.internalPort`       | Service internal port                  | `3306`                               |
@@ -28,22 +30,25 @@ This [Helm](https://helm.sh) chart provides a containerised cloud sql service wi
 `credentials.secret`         | The name for the credentials secret    | `cloudsql-credentials`               |
 `credentials.secret_enabled` | Whether to create a credentials secret | `true`                               |
 `credentials.b64enc`         | Base64 encoded credentials             | `nil`                                |
-`ssl.path`                   | SSL mount path within container        | `/etc/ssl/certs`                     | 
+`ssl.path`                   | SSL mount path within container        | `/etc/ssl/certs`                     |
 `ssl.hostpath`               | SSL certs host location                | `/etc/ssl/certs`                     |
 
 
 ### Install
 
 ```bash
+$ git clone https://github.com/ajcrowe/cloudsql-proxy-chart.git cloudsql-proxy
 $ helm install --name my-cloudsql-proxy \
     --set gcp.project=my-gcp-project \
     --set gcp.region=europe-west1 \
     --set gcp.instance=my-cloudsql-master \
-    --set credentials.file=/path/to/credentials.json .
+    --set credentials.file=/path/to/credentials.json
+    cloudsql-proxy
 ```
 
-## Uninstall
+### Uninstall
 
 ```bash
 $ helm delete my-cloud-proxy
 ```
+

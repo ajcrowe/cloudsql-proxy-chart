@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cloudsql-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          name: cloudsql-proxy
+          command: ["/cloud_sql_proxy",
+                    "-instances={{ .Values.gce.project }}:{{ .Values.gce.region }}:{{ .Values.gce.instance }}=tcp:{{ .Values.bind_addr}}:{{ .Values.bind_port}}",
+                    "-credential_file={{ .Values.credentials.path }}/{{ .Values.credentials.file }}"]
+          volumeMounts:
+            - name: cloudsql-credentials
+              mountPath: {{ .Values.credentials.path }}
+              readOnly: true
+            - name: ssl-certs
+              mountPath: {{ .Values.ssl.path }}
+      volumes:
+        - name: cloudsql-credentials
+          secret:
+            secretName: {{ .Values.credentials.secret}}
+        - name: ssl-certs
+          hostPath:
+            path: {{ .Values.ssl.hostpath }}

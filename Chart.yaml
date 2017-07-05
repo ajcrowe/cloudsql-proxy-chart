@@ -1,0 +1,7 @@
+apiVersion: v1
+description: A Helm chart running Google Cloud SQL Proxy
+name: cloudsql-proxy
+version: 0.1.0
+maintainers:
+- name: Alex Crowe
+  email: alex@ajcrowe.io

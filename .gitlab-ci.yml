@@ -1,0 +1,10 @@
+stages:
+- test
+
+test:lint:
+  stage: test
+  image: linkyard/helm
+  script:
+  - helm lint .
+  tags:
+  - docker

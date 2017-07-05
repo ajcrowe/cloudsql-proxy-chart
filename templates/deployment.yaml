@@ -18,7 +18,7 @@ spec:
         - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           name: cloudsql-proxy
           command: ["/cloud_sql_proxy",
-                    "-instances={{ .Values.gce.project }}:{{ .Values.gce.region }}:{{ .Values.gce.instance }}=tcp:{{ .Values.bind_addr}}:{{ .Values.bind_port}}",
+                    "-instances={{ .Values.gcp.project }}:{{ .Values.gcp.region }}:{{ .Values.gcp.instance }}=tcp:{{ .Values.bind.addr}}:{{ .Values.bind.port}}",
                     "-credential_file={{ .Values.credentials.path }}/{{ .Values.credentials.file }}"]
           volumeMounts:
             - name: cloudsql-credentials

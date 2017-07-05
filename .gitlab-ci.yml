@@ -1,7 +1,7 @@
 test:lint:
   stage: test
-  image: linkyard/helm
+  image: themalkolm/docker-helm
   script:
   - helm lint .
   tags:
-  - docker
+  - docker-generic

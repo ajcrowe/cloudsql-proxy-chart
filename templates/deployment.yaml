@@ -29,12 +29,16 @@ spec:
               mountPath: {{ .Values.ssl.path }}
           ports:
           - containerPort: {{ .Values.bind.port }}
-            name: cloudsqlproxyport
+            name: cloudsqlport
             protocol: TCP
       volumes:
         - name: cloudsql-credentials
           secret:
+            {{- if .Values.credentials.secret }}
             secretName: {{ .Values.credentials.secret}}
+            {{- else }}
+            secretName: {{ template "cloudsql-proxy.fullname" . }}-credentials
+            {{- end }}
         - name: ssl-certs
           hostPath:
             path: {{ .Values.ssl.hostpath }}

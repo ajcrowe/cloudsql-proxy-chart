@@ -26,7 +26,7 @@ Below is a list of all configuration parameters available, items in **bold** are
 `service.externalPort`       | Service external port                  |  `3306`                              |
 `credentials.path`           | Where to mount credentials             | `/secrets/cloudsql`                  |
 `credentials.file`           | Where to look for a credentials file   | `credentials.json`                   |
-`credentials.secret`         | The name for the credentials secret    | `cloudsql-credentials`               |
+`credentials.secret`         | The name for the credentials secret    | `nil`               |
 `credentials.secret_enabled` | Whether to create a credentials secret | `true`                               |
 `credentials.b64enc`         | Base64 encoded credentials             | `nil`                                |
 `ssl.path`                   | SSL mount path within container        | `/etc/ssl/certs`                     |

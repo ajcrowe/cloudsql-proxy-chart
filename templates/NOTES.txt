@@ -1,0 +1,1 @@
+Cloud SQL Proxy can now be accessed within your Kubernetes cluster at host {{ template "cloudsql-proxy.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local and port {{ .Values.service.externalPort }}

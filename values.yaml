@@ -20,7 +20,7 @@ service:
 credentials: 
   path: /secrets/cloudsql
   file: credentials.json
-  secret: cloudsql-credentials
+  secret:
   secret_enabled: true
   b64enc: 
 ssl:

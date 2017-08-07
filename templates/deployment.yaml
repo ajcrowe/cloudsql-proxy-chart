@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cloudsql-proxy
+  name: {{ template "cloudsql-proxy.fullname" . }}
 spec:
   replicas: 1
   template:

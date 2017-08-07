@@ -50,4 +50,3 @@ $ helm install --name my-cloudsql-proxy \
 ```bash
 $ helm delete my-cloud-proxy
 ```
-
